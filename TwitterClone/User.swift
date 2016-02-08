@@ -19,10 +19,12 @@ class User: NSObject {
     var profileImageURL: NSURL?
     var tagline: String?
     var dictionary: NSDictionary
+    var favCount: Int?
     
     init(dictionary: NSDictionary){
         self.dictionary = dictionary
         name = dictionary["name"] as? String
+        favCount = dictionary["favourites_count"] as? Int
         screenname = dictionary["screen_name"] as? String
         let imageURLString = dictionary["profile_image_url"] as? String
         if imageURLString != nil {

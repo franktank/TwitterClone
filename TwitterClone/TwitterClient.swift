@@ -85,4 +85,36 @@ class TwitterClient: BDBOAuth1SessionManager {
                 self.loginCompletion?(user:nil, error: error)
         }
     }
+    
+    func addFavorite(id: String) {
+        TwitterClient.sharedInstance.POST("1.1/favorites/create.json?id=\(id)", parameters: nil, success: { (operation:NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("Favorited!")
+            }) { (operation:NSURLSessionDataTask?, error: NSError!) -> Void in
+                print("Failed to favorite")
+        }
+    }
+    
+    func removeFavorite(id: String){
+        TwitterClient.sharedInstance.POST("1.1/favorites/destroy.json?id=\(id)", parameters: nil, success: { (operation:NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("Unfavorited!")
+            }) { (operation:NSURLSessionDataTask?, error: NSError!) -> Void in
+                print("Failed to unfavorite")
+        }
+    }
+    
+    func addRetweet(id: String) {
+        TwitterClient.sharedInstance.POST("1.1/statuses/retweet/\(id).json", parameters: nil, success: { (operation:NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("Successfully retweeted")
+            }) { (operation: NSURLSessionDataTask?, response: AnyObject?) -> Void in
+                print("Failed to retweet")
+        }
+    }
+    
+    func removeRetweet(id: String) {
+        TwitterClient.sharedInstance.POST("1.1/statuses/unretweet/\(id).json", parameters: nil, success: { (operation:NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("Successfully unretweeted")
+            }) { (operation: NSURLSessionDataTask?, response: AnyObject?) -> Void in
+                print("Failed to unretweet")
+        }
+    }
 }
