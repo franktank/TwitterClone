@@ -9,8 +9,7 @@
 import UIKit
 import BDBOAuth1Manager
 
-let twitterConsumerKey = "9D61M6aUOU05TqThELYEV4MkF"
-let twitterConsumerSecret = "k9OsuJONj9PWtdTfKIHJgMCuoU0BucvdsOM4s3jFZGTDCmvOf9"
+
 let twitterBaseURL = NSURL(string: "https://api.twitter.com")
 
 class TwitterClient: BDBOAuth1SessionManager {
@@ -27,7 +26,7 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     func homeTimelineWithParams(params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) -> ()) {
         
-        GET("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+                GET("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
             
             var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
             completion(tweets: tweets, error: nil)
