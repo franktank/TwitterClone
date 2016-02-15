@@ -9,7 +9,8 @@
 import UIKit
 import BDBOAuth1Manager
 
-
+let twitterConsumerKey = "9D61M6aUOU05TqThELYEV4MkF"
+let twitterConsumerSecret = "k9OsuJONj9PWtdTfKIHJgMCuoU0BucvdsOM4s3jFZGTDCmvOf9"
 let twitterBaseURL = NSURL(string: "https://api.twitter.com")
 
 class TwitterClient: BDBOAuth1SessionManager {
@@ -115,5 +116,29 @@ class TwitterClient: BDBOAuth1SessionManager {
             }) { (operation: NSURLSessionDataTask?, response: AnyObject?) -> Void in
                 print("Failed to unretweet")
         }
+    }
+    
+    func composeTweet(message: String){
+        TwitterClient.sharedInstance.POST("1.1/statuses/update.json?status=\(message)", parameters:nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("Composed successfully")
+            
+            }) { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+                print("Failed to compose")
+                
+        }
+    }
+    
+    func userDetails(completion: (user:User, error:NSError?) -> ()) {
+        TwitterClient.sharedInstance.GET("1.1/account/verify_credentials.json", parameters: nil, progress:nil, success:{ (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            
+            print("It worked!")
+            var user = User(dictionary: response as! NSDictionary)
+            User.currentUser = user
+            print("user: \(user.name)")
+            completion(user:user, error: nil)
+            }, failure: { (operation: NSURLSessionDataTask?, error: NSError!) -> Void in
+                print("error getting user")
+                self.loginCompletion?(user:nil, error:error)
+        })
     }
 }

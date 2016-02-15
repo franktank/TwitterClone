@@ -20,6 +20,10 @@ class User: NSObject {
     var tagline: String?
     var dictionary: NSDictionary
     var favCount: Int?
+    var followersCount: Int?
+    var friendsCount: Int?
+    var profileBackgroundColor: String?
+    var profileBackgroundURL: String?
     
     init(dictionary: NSDictionary){
         self.dictionary = dictionary
@@ -33,6 +37,10 @@ class User: NSObject {
             profileImageURL = nil
         }
         tagline = dictionary["description"] as? String
+        followersCount = dictionary["followers_count"] as? Int
+        friendsCount = dictionary["friends_count"] as? Int
+        profileBackgroundURL = dictionary["profile_background_image_url"] as? String
+        profileBackgroundColor = dictionary["profile_background_color"] as? String
     }
     func logout() {
         User.currentUser = nil

@@ -18,13 +18,14 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var twitterTagLabel: UILabel!
     @IBOutlet weak var profilePictureImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    var retweet = false
+   var retweet = false
     var favorite = false
     
     var tweet: Tweet! {
         
         didSet {
-        
+            retweet = tweet.isRet!
+            favorite = tweet.isFav!
             nameLabel.text = tweet.user!.name
             timeLabel.text = tweet.createdAt!.shortTimeAgoSinceNow()
             postLabel.text = tweet.text
